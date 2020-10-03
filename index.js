@@ -43,6 +43,7 @@ app.get("/admin/balances/", async (req, res) => {
 
 app.put("/admin/balances/update", async (req, res) => {
   let amounts = req.body.amounts;
+  let values = `balances + ${amounts}`;
   let name = req.body.name;
   let crypto_name = req.body.crypto_name;
   let query = `name='${name}' and crypto_name='${crypto_name}'`;
@@ -50,7 +51,7 @@ app.put("/admin/balances/update", async (req, res) => {
     (query = query),
     (field = "balances"),
     (table = "accounts"),
-    (amounts = amounts)
+    (values = values)
   );
   let formattedData = formatter.formatUpdate(data);
   res
@@ -82,15 +83,37 @@ app.put("/admin/exchanges/currency/", async (req, res) => {
   let to = req.body.to;
   let rate = req.body.rate;
   let query = `from_currency='${from}' and to_currency='${to}'`;
-  let isExists = await exists.isExists(
+  let isExists = await mariadb_adapter.basicQuery(
     (field = "rate"),
     (table = "exchanges"),
     (query = query)
   );
+  let data;
+  let formattedData;
+  if (isExists.length === 0) {
+    let field = "(from_currency,to_currency,rate)";
+    let values = `("${from}", "${to}", ${rate})`;
+    data = mariadb_adapter.insertField(
+      (field = field),
+      (table = "exchanges"),
+      (values = values)
+    );
+    formattedData = formatter.formatInsert(data);
+  } else {
+    let query = `from_currency='${from}' and to_currency='${to}'`;
+    data = mariadb_adapter.updateField(
+      (query = query),
+      (field = "rate"),
+      (table = "exchanges"),
+      (values = rate)
+    );
+    formattedData = formatter.formatUpdate(data);
+  }
 
-  result = isExists;
-
-  console.log(result);
+  res
+    .status(formattedData["status_code"])
+    .set("Content-Type", "application/json")
+    .send(formattedData);
 });
 
 app.put("/customers/send/currency", async (req, res) => {});

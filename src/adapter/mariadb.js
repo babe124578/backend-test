@@ -38,8 +38,8 @@ const sumWithSpecifiedField = async (
   return result;
 };
 
-const updateField = async (query, field, table, amounts) => {
-  query_script = `UPDATE ${table} SET ${field} = ${field} + ${amounts} WHERE ${query}`;
+const updateField = async (query, field, table, values) => {
+  query_script = `UPDATE ${table} SET ${field} = ${values} WHERE ${query}`;
   const result = await _query(query_script, database);
   return result;
 };

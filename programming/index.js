@@ -1,9 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const validate = require("express-jsonschema").validate;
-const mariadb_adapter = require("./src/adapter/mariadb.js");
-const formatter = require("./src/utility/formatter");
-const validation = require("./src/utility/validation");
 
 const app = express();
 const port = 3000;
@@ -16,6 +13,10 @@ app.get("/", (req, res) => {
     .set("Content-Type", "application/json")
     .send({ status: "success", data: {} });
 });
+
+const mariadb_adapter = require("./src/adapter/mariadb.js");
+const formatter = require("./src/utility/formatter");
+const validation = require("./src/utility/validation");
 
 app.get("/admin/balances/", async (req, res) => {
   let data;

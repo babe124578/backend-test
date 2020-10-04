@@ -4,6 +4,7 @@ const mariadb = require("mariadb");
 
 const pool = mariadb.createPool({
   host: "programming_databases_1",
+  // host: "127.0.0.1",
   user: "root",
   password: "0000",
   connectionLimit: 5,
@@ -14,49 +15,47 @@ const database = "programming";
 
 /** Start function */
 
-const basicQuery = async (field, table, query) => {
-  let query_script = `SELECT ${field} FROM ${table} WHERE ${query}`;
-  const result = await _query(query_script, database);
+const basicQuery = async (select, from, where) => {
+  let query_script = `SELECT ${select} FROM ${from} WHERE ${where}`;
+  const result = await _query(query_script);
   return result;
 };
 
 const sumWithGroupBy = async (group_by, sum_field, table) => {
   let query_script = `SELECT ${group_by}, SUM(${sum_field}) as ${sum_field} FROM ${table} GROUP BY ${group_by}`;
-  const result = await _query(query_script, database);
+  const result = await _query(query_script);
   return result;
 };
 
-const sumWithSpecifiedField = async (
-  database,
-  selected_field,
-  sum_field,
-  table,
-  value
-) => {
-  let query_script = `SELECT SUM(${sum_field}) as ${sum_field} FROM ${table} WHERE ${selected_field} = '${value}'`;
-  const result = await _query(query_script, database);
+const sumWithSpecifiedField = async (sum_field, table, where) => {
+  let query_script = `SELECT SUM(${sum_field}) as ${sum_field} FROM ${table} WHERE ${where}`;
+  const result = await _query(query_script);
   return result;
 };
 
-const updateField = async (query, field, table, values) => {
-  let query_script = `UPDATE ${table} SET ${field} = ${values} WHERE ${query}`;
-  const result = await _query(query_script, database);
+const updateField = async (where, set, table, update_to) => {
+  let query_script = `UPDATE ${table} SET ${set} = ${update_to} WHERE ${where}`;
+  const result = await _query(query_script);
   return result;
 };
 
-const insertField = async (field, table, values) => {
-  let query_script = `INSERT INTO ${table} ${field} VALUES ${values}`;
-  const result = await _query(query_script, database);
+const insertRow = async (table_headers, table, table_values) => {
+  let query_script = `INSERT INTO ${table} ${table_headers} VALUES ${table_values}`;
+  const result = await _query(query_script);
   return result;
 };
 
-const deleteQuery = async (table, query) => {
-  let query_script = `DELETE FROM ${table} WHERE ${query}`;
-  const result = await _query(query_script, database);
+const deleteQuery = async (table, where) => {
+  let query_script = `DELETE FROM ${table} WHERE ${where}`;
+  const result = await _query(query_script);
   return result;
 };
 
-const _query = async (query_script, database) => {
+const transaction = async (text) => {
+  await _query(text);
+};
+
+const _query = async (query_script) => {
   let conn;
   try {
     conn = await pool.getConnection();
@@ -75,8 +74,9 @@ const _query = async (query_script, database) => {
 module.exports = {
   basicQuery,
   updateField,
-  insertField,
+  insertRow,
   deleteQuery,
   sumWithGroupBy,
   sumWithSpecifiedField,
+  transaction,
 };

@@ -4,7 +4,7 @@
   "description": "programming",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon index.js",
+    "start": "./node_modules/.bin/nodemon -L index.js",
     "test": "newman run tests/backend-test-api.collection.json"
   },
   "repository": {

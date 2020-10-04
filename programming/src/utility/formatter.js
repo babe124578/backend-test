@@ -17,9 +17,9 @@ const format = (payload) => {
 const formatUpdate = (payload) => {
   if (payload["affectedRows"] === 0) {
     return {
-      status: "warning",
+      status: "failure",
       data: "No user or this user doesn't have this currency",
-      status_code: 200,
+      status_code: 400,
     };
   } else {
     return { status: "success", data: "Update success", status_code: 200 };

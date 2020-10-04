@@ -1,0 +1,12 @@
+FROM node:lts-alpine
+RUN apk update && apk add bash
+
+WORKDIR /usr/src/app
+COPY package*.json ./
+
+RUN npm install
+COPY . .
+
+RUN sed -i 's+nodemon.cmd+nodemon+' ./package.json
+
+CMD ["npm","start"]

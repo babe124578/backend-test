@@ -21,17 +21,17 @@ app.get("/admin/balances/", async (req, res) => {
   let data;
   if (req.query.currency === undefined) {
     data = await mariadb_adapter.sumWithGroupBy(
-      (group_by = "crypto_name"),
-      (sum_field = "balances"),
-      (table = "accounts")
+      "crypto_name",
+      "balances",
+      "accounts"
     );
   } else {
     let currency = req.query.currency;
     data = await mariadb_adapter.sumWithSpecifiedField(
-      (selected_field = "crypto_name"),
-      (sum_field = "balances"),
-      (table = "accounts"),
-      (value = currency)
+      "crypto_name",
+      "balances",
+      "accounts",
+      currency
     );
   }
   let formattedData = formatter.format(data);
@@ -48,10 +48,10 @@ app.put("/admin/balances/update", async (req, res) => {
   let crypto_name = req.body.crypto_name;
   let query = `name='${name}' and crypto_name='${crypto_name}'`;
   let data = await mariadb_adapter.updateField(
-    (query = query),
-    (field = "balances"),
-    (table = "accounts"),
-    (values = values)
+    query,
+    "balances",
+    "accounts",
+    values
   );
   let formattedData = formatter.formatUpdate(data);
   res
@@ -66,11 +66,7 @@ app.post("/admin/currency/", async (req, res) => {
   let crypto_name = req.body.crypto_name;
   let field = `(name,crypto_name,balances)`;
   let values = `("${name}", "${crypto_name}", ${amounts})`;
-  let data = await mariadb_adapter.insertField(
-    (field = field),
-    (table = "accounts"),
-    (values = values)
-  );
+  let data = await mariadb_adapter.insertField(field, "accounts", values);
   let formattedData = formatter.formatInsert(data);
   res
     .status(formattedData["status_code"])
@@ -82,31 +78,22 @@ app.put("/admin/exchanges/currency/", async (req, res) => {
   let from = req.body.from;
   let to = req.body.to;
   let rate = req.body.rate;
-  let query = `from_currency='${from}' and to_currency='${to}'`;
+  let exists_query = `from_currency='${from}' and to_currency='${to}'`;
   let isExists = await mariadb_adapter.basicQuery(
-    (field = "rate"),
-    (table = "exchanges"),
-    (query = query)
+    "rate",
+    "exchanges",
+    exists_query
   );
   let data;
   let formattedData;
   if (isExists.length === 0) {
     let field = "(from_currency,to_currency,rate)";
     let values = `("${from}", "${to}", ${rate})`;
-    data = mariadb_adapter.insertField(
-      (field = field),
-      (table = "exchanges"),
-      (values = values)
-    );
+    data = mariadb_adapter.insertField(field, "exchanges", values);
     formattedData = formatter.formatInsert(data);
   } else {
     let query = `from_currency='${from}' and to_currency='${to}'`;
-    data = mariadb_adapter.updateField(
-      (query = query),
-      (field = "rate"),
-      (table = "exchanges"),
-      (values = rate)
-    );
+    data = mariadb_adapter.updateField(query, "rate", "exchanges", rate);
     formattedData = formatter.formatUpdate(data);
   }
 
@@ -122,10 +109,7 @@ app.delete("/admin/currency/", async (req, res) => {
   let name = req.body.name;
   let crypto_name = req.body.crypto_name;
   let query = `name='${name}' AND crypto_name='${crypto_name}'`;
-  let data = await mariadb_adapter.deleteQuery(
-    (table = "accounts"),
-    (query = query)
-  );
+  let data = await mariadb_adapter.deleteQuery("accounts", query);
   let formattedData = formatter.formatUpdate(data);
   res
     .status(formattedData["status_code"])

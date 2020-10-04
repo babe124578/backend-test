@@ -3,7 +3,7 @@
 const mariadb = require("mariadb");
 
 const pool = mariadb.createPool({
-  host: "127.0.0.1",
+  host: "programming_databases_1",
   user: "root",
   password: "0000",
   connectionLimit: 5,
@@ -15,13 +15,13 @@ const database = "programming";
 /** Start function */
 
 const basicQuery = async (field, table, query) => {
-  query_script = `SELECT ${field} FROM ${table} WHERE ${query}`;
+  let query_script = `SELECT ${field} FROM ${table} WHERE ${query}`;
   const result = await _query(query_script, database);
   return result;
 };
 
 const sumWithGroupBy = async (group_by, sum_field, table) => {
-  query_script = `SELECT ${group_by}, SUM(${sum_field}) as ${sum_field} FROM ${table} GROUP BY ${group_by}`;
+  let query_script = `SELECT ${group_by}, SUM(${sum_field}) as ${sum_field} FROM ${table} GROUP BY ${group_by}`;
   const result = await _query(query_script, database);
   return result;
 };
@@ -33,25 +33,25 @@ const sumWithSpecifiedField = async (
   table,
   value
 ) => {
-  query_script = `SELECT SUM(${sum_field}) as ${sum_field} FROM ${table} WHERE ${selected_field} = '${value}'`;
+  let query_script = `SELECT SUM(${sum_field}) as ${sum_field} FROM ${table} WHERE ${selected_field} = '${value}'`;
   const result = await _query(query_script, database);
   return result;
 };
 
 const updateField = async (query, field, table, values) => {
-  query_script = `UPDATE ${table} SET ${field} = ${values} WHERE ${query}`;
+  let query_script = `UPDATE ${table} SET ${field} = ${values} WHERE ${query}`;
   const result = await _query(query_script, database);
   return result;
 };
 
 const insertField = async (field, table, values) => {
-  query_script = `INSERT INTO ${table} ${field} VALUES ${values}`;
+  let query_script = `INSERT INTO ${table} ${field} VALUES ${values}`;
   const result = await _query(query_script, database);
   return result;
 };
 
 const deleteQuery = async (table, query) => {
-  query_script = `DELETE FROM ${table} WHERE ${query}`;
+  let query_script = `DELETE FROM ${table} WHERE ${query}`;
   const result = await _query(query_script, database);
   return result;
 };

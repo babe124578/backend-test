@@ -1,0 +1,9 @@
+FROM mariadb/server
+
+ENV MYSQL_ROOT_PASSWORD=0000
+
+COPY dump-programming.sql ./dump-programming.sql
+
+RUN ls
+
+CMD mysql --user root --password=0000 --force < ./dump-programming.sql

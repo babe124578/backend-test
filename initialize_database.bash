@@ -1,0 +1,1 @@
+mysql --user root --password=0000 --force < ./docker-entrypoint-initdb.d/dump-programming.sql

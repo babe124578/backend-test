@@ -35,8 +35,8 @@ jobs:
           ECR_REPOSITORY_MARIA: ${{ secrets.ECR_REPOSITORY_MARIA }}
           IMAGE_TAG: ${{ steps.tag.outputs.SHA7 }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS:latest -f Dockerfile.express .
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_MARIA:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY_MARIA:latest -f Dockerfile.maria .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS:latest -f ./programmer/Dockerfile.express .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_MARIA:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY_MARIA:latest -f ./programmer/Dockerfile.maria .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS
           docker push $ECR_REGISTRY/$ECR_REPOSITORY_MARIA:$IMAGE_TAG

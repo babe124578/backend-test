@@ -19,7 +19,7 @@
 -- Table structure for table `accounts`
 --
 
-CREATE DATABASE `programming`;
+CREATE DATABASE IF NOT EXISTS `programming`;
 use `programming` ;
 
 DROP TABLE IF EXISTS `accounts`;

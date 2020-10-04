@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon -L index.js",
-    "test": "newman run tests/backend-test-api.collection.json"
+    "test": "newman run tests/backend-test.postman_collection.json -e tests/Local.postman_environment.json"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "mariadb": "^2.4.2"
   },
   "devDependencies": {
+    "newman": "^5.2.0",
     "nodemon": "^2.0.4"
   }
 }

@@ -42,6 +42,45 @@ app.get("/admin/balances/", async (req, res) => {
     .send(formattedData);
 });
 
+app.get("/admin/exchanges/", async (req, res) => {
+  let from = req.query.from;
+  let to = req.query.to;
+  if (from === undefined || to === undefined) {
+    res
+      .status(400)
+      .set("Content-Type", "application/json")
+      .send({
+        status: "failure",
+        data: { error: "Please type from and to in query parameter" },
+        status_code: 400,
+      });
+    return;
+  }
+  let data = await mariadb_adapter.basicQuery(
+    "*",
+    "exchanges",
+    `from_currency='${from}' and to_currency='${to}'`
+  );
+  if (data.length === 0) {
+    res
+      .status(400)
+      .set("Content-Type", "application/json")
+      .send({
+        status: "failure",
+        data: {
+          error: `Exchange rate from ${from} to ${to} not found`,
+        },
+        status_code: 400,
+      });
+    return;
+  }
+  let formattedData = formatter.format(data);
+  res
+    .status(formattedData["status_code"])
+    .set("Content-Type", "application/json")
+    .send(formattedData);
+});
+
 app.put(
   "/admin/balances/update",
   validate({
@@ -100,7 +139,7 @@ app.put(
     let from = req.body.from;
     let to = req.body.to;
     let rate = req.body.rate;
-    let isExists = await mariadb_adapter.basicQuery("rate", "exchanges", where);
+    let isExists = await mariadb_adapter.basicQuery("rate", "exchanges", rate);
     let data;
     let formattedData;
     if (isExists.length === 0) {
@@ -124,6 +163,45 @@ app.put(
       .send(formattedData);
   }
 );
+
+app.get("/customer/balances/", async (req, res) => {
+  let name = req.query.name;
+  let crypto_name = req.query.crypto_name;
+  if (name === undefined || crypto_name === undefined) {
+    res
+      .status(400)
+      .set("Content-Type", "application/json")
+      .send({
+        status: "failure",
+        data: { error: "No name or crypto_name in query parameter" },
+        status_code: 400,
+      });
+    return;
+  }
+  let data = await mariadb_adapter.basicQuery(
+    "balances",
+    "accounts",
+    `name='${name}' and crypto_name='${crypto_name}'`
+  );
+  if (data.length === 0) {
+    res
+      .status(400)
+      .set("Content-Type", "application/json")
+      .send({
+        status: "failure",
+        data: {
+          error: `User not found or this user don't have ${crypto_name}`,
+        },
+        status_code: 400,
+      });
+    return;
+  }
+  let formattedData = formatter.format(data);
+  res
+    .status(formattedData["status_code"])
+    .set("Content-Type", "application/json")
+    .send(formattedData);
+});
 
 app.put(
   "/customers/send/currency",

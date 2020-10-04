@@ -1,0 +1,1357 @@
+{
+	"info": {
+		"_postman_id": "bce9e18f-8fe8-42cc-9b6c-af8271056423",
+		"name": "backend-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health check",
+			"item": [
+				{
+					"name": "Health check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8011b87e-e4c8-4f7b-85ae-7573232e1b44",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field status should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should have field 'data'\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"data\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							]
+						},
+						"description": "check health"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get balance",
+			"item": [
+				{
+					"name": "Get all balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "89b2c21b-a220-4c57-93f0-8999c307f89d",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should have field 'data'\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"data\")\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response data type should be 'array'\", function () {\r",
+									"    pm.expect(jsonData.data).to.be.a(\"array\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/admin/balances/",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"balances",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get balance with parameter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f00e727-d05c-41d8-b834-85d58c738ade",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response should have field 'data'\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"data\")\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response data type should be 'array'\", function () {\r",
+									"    pm.expect(jsonData.data).to.be.a(\"array\")\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'balances' should be '3000'\", function () {\r",
+									"    pm.expect(jsonData.data[0].balances).to.eql(3000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/admin/balances?currency=ETH",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "currency",
+									"value": "ETH"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Update balance",
+			"item": [
+				{
+					"name": "Pre-check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "00a80433-a3ad-4e7b-b837-6b377146ffe9",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'balances' should be '100'\", function () {\r",
+									"    pm.expect(jsonData.data[0].balances).to.eql(100);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=D&crypto_name=XRP",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "D"
+								},
+								{
+									"key": "crypto_name",
+									"value": "XRP"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update balance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de8f6477-8246-489e-9d7f-d817ccc41492",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'Update success'\", function () {\r",
+									"    pm.expect(jsonData.data).to.eql(\"Update success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amounts\":200,\r\n    \"name\":\"C\",\r\n    \"crypto_name\":\"XRP\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/admin/balances/update",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"balances",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update balance - post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "83056aa4-adff-473b-b104-7621fb906ebf",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'Update success'\", function () {\r",
+									"    pm.expect(jsonData.data).to.eql(\"Update success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amounts\":-200,\r\n    \"name\":\"Zaa\",\r\n    \"crypto_name\":\"sZZa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/admin/balances/update",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"balances",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post-check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7053c392-812f-48fe-9083-2491a900de0a",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'balances' should be '100'\", function () {\r",
+									"    pm.expect(jsonData.data[0].balances).to.eql(100);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=D&crypto_name=XRP",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "D"
+								},
+								{
+									"key": "crypto_name",
+									"value": "XRP"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Insert currency",
+			"item": [
+				{
+					"name": "Pre-check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "beb48512-d54f-4c0d-88f9-56213c95be86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"failure\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should have 'error'\", function () {\r",
+									"    pm.expect(jsonData.data).to.have.property('error');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=F&crypto_name=0XRP",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "F"
+								},
+								{
+									"key": "crypto_name",
+									"value": "0XRP"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert currency",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "10b93ece-da5d-4e3f-9392-a2edada195b5",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'Update success'\", function () {\r",
+									"    pm.expect(jsonData.data).to.eql(\"Update success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amounts\":2000,\r\n    \"name\":\"F\",\r\n    \"crypto_name\":\"0XRP\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/admin/currency",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"currency"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "teardown",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f25fd236-673d-45f6-8183-a37750a66f70",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'Update success'\", function () {\r",
+									"    pm.expect(jsonData.data).to.eql(\"Update success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"F\",\r\n    \"crypto_name\":\"0XRP\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/admin/currency",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"currency"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6b71cf6-dd08-4e5a-b0b5-e5714b1e7f4c",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"failure\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should have 'error'\", function () {\r",
+									"    pm.expect(jsonData.data).to.have.property('error');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=F&crypto_name=0XRP",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "F"
+								},
+								{
+									"key": "crypto_name",
+									"value": "0XRP"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Update exchange",
+			"item": [
+				{
+					"name": "Pre check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "986410a6-8c50-4f3b-89bd-4ae52bc5c186",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should have rate equal to '19'\", function () {\r",
+									"    pm.expect(jsonData.data[0].rate).to.eql(19);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/admin/exchanges?from=BTC&to=ETH",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"exchanges"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "BTC"
+								},
+								{
+									"key": "to",
+									"value": "ETH"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update exchange rate to 50",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "21103851-7101-4df3-9ea5-91eca36977f5",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'Update success'\", function () {\r",
+									"    pm.expect(jsonData.data).to.eql(\"Update success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"BTC\",\r\n    \"to\":\"ETH\",\r\n    \"rate\":50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/admin/exchanges/currency/",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"exchanges",
+								"currency",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exchange rate should be 50",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b7768457-d7cc-4c02-b34d-2f16c2c0ef79",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should have rate equal to '50'\", function () {\r",
+									"    pm.expect(jsonData.data[0].rate).to.eql(50);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/admin/exchanges?from=BTC&to=ETH",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"exchanges"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "BTC"
+								},
+								{
+									"key": "to",
+									"value": "ETH"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update exchange rate back to 19",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2a79e8fd-05e1-4f24-a849-e24b88b3fbce",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'Update success'\", function () {\r",
+									"    pm.expect(jsonData.data).to.eql(\"Update success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from\": \"BTC\",\r\n    \"to\":\"ETH\",\r\n    \"rate\":19\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/admin/exchanges/currency/",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"exchanges",
+								"currency",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b3a6fe3-d641-4550-ba7b-95c72aef9b42",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should have rate equal to '19'\", function () {\r",
+									"    pm.expect(jsonData.data[0].rate).to.eql(19);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/admin/exchanges?from=BTC&to=ETH",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"exchanges"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "BTC"
+								},
+								{
+									"key": "to",
+									"value": "ETH"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Transfer balances",
+			"item": [
+				{
+					"name": "Pre check user A ETH 1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b7c439f1-c944-4749-b3e9-4e8b38d741f9",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'balances' should be '1000'\", function () {\r",
+									"    pm.expect(jsonData.data[0].balances).to.eql(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=A&crypto_name=ETH",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "A"
+								},
+								{
+									"key": "crypto_name",
+									"value": "ETH"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pre check user D ETH 100",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1702246c-b0ec-4b36-8388-b7114c2ac425",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'balances' should be '100'\", function () {\r",
+									"    pm.expect(jsonData.data[0].balances).to.eql(100);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=D&crypto_name=XRP",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "D"
+								},
+								{
+									"key": "crypto_name",
+									"value": "XRP"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transfer 200 ETH from A to D with XRP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a21b22bf-f8fd-4305-86bd-4245435669a4",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'Transfer money success'\", function () {\r",
+									"    pm.expect(jsonData.data).to.eql(\"Transfer money success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"sender\":\"A\",\"receiver\":\"D\",\"sender_currency\":\"ETH\",\"receiver_currency\":\"XRP\",\"amounts\":200}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/customers/send/currency",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customers",
+								"send",
+								"currency"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A ETH balance should be 800",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "987b934f-1443-4b3f-9710-aaf3feda78de",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'balances' should be '800'\", function () {\r",
+									"    pm.expect(jsonData.data[0].balances).to.eql(800);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=A&crypto_name=ETH",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "A"
+								},
+								{
+									"key": "crypto_name",
+									"value": "ETH"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "D BTC balance should be 140",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ca67241b-28fc-4940-a92c-7bc0db5f3abf",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'balances' should be '140'\", function () {\r",
+									"    pm.expect(jsonData.data[0].balances).to.eql(140);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=D&crypto_name=XRP",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "D"
+								},
+								{
+									"key": "crypto_name",
+									"value": "XRP"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post: increase A ETH by 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f2283859-4629-40d5-8e83-4da6242fa8cb",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'Update success'\", function () {\r",
+									"    pm.expect(jsonData.data).to.eql(\"Update success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amounts\":200,\r\n    \"name\":\"A\",\r\n    \"crypto_name\":\"ETH\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/admin/balances/update",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"balances",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post: decrease D XRP by 40",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e6b726b9-17ee-47d6-9882-7ab5f7b47596",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'Update success'\", function () {\r",
+									"    pm.expect(jsonData.data).to.eql(\"Update success\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amounts\":-40,\r\n    \"name\":\"D\",\r\n    \"crypto_name\":\"XRP\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{HOST}}/admin/balances/update",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"admin",
+								"balances",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post check user A ETH 1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "22c507b2-4c3b-4ac0-84e7-885bb0fd2f86",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'balances' should be '1000'\", function () {\r",
+									"    pm.expect(jsonData.data[0].balances).to.eql(1000);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=A&crypto_name=ETH",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "A"
+								},
+								{
+									"key": "crypto_name",
+									"value": "ETH"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post check user D ETH 100",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d766f56-3bd4-4cd0-8f7a-2475c3e14e7e",
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'data' should be 'success'\", function () {\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response field 'balances' should be '100'\", function () {\r",
+									"    pm.expect(jsonData.data[0].balances).to.eql(100);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{HOST}}/customer/balances?name=D&crypto_name=XRP",
+							"protocol": "http",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"customer",
+								"balances"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "D"
+								},
+								{
+									"key": "crypto_name",
+									"value": "XRP"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

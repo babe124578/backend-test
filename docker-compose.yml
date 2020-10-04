@@ -1,18 +1,14 @@
 version: "3"
 services:
   databases:
-    image: mariadb/server
+    build:
+      context: ./
+      dockerfile: Dockerfile.maria
     restart: always
     ports:
       - 3306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=0000
     networks:
       - programming
-    volumes:
-      - ./dump-programming.sql:/docker-entrypoint-initdb.d/dump-programming.sql
-      - ./initialize_database.bash:/initialize_database.bash
-    command: --default-authentication-plugin=mysql_native_password
 
   api:
     build:

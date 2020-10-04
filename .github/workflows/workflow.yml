@@ -1,5 +1,7 @@
 name: MasterDeployCI
 on:
+  push:
+    branchs: master
   pull_request:
     branches: master
     types: ["closed"]
@@ -29,13 +31,16 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          ECR_REPOSITORY_EXPRESS: ${{ secrets.ECR_REPOSITORY_EXPRESS }}
+          ECR_REPOSITORY_MARIA: ${{ secrets.ECR_REPOSITORY_MARIA }}
           IMAGE_TAG: ${{ steps.tag.outputs.SHA7 }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f Dockerfile.prod .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS:latest -f Dockerfile.express .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_MARIA:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY_MARIA:latest -f Dockerfile.maria .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_EXPRESS
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_MARIA:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_MARIA
       - name: Logout ECR
         if: always()
         run: docker logout ${{ steps.login-ecr.outputs.registry }}

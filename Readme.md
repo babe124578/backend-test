@@ -15,9 +15,12 @@
 
 ## Endpoint
 
-- For local use only
-- Run on http://localhost port 80 or http://127.0.0.1
-- e.g. http://localhost/admin/balances?currency=XRP
+- For local use
+  - Run on http://localhost port 80 or http://127.0.0.1
+  - e.g. http://localhost/admin/balances?currency=XRP
+- For on server
+  - Run on http://13.229.236.171
+  - e.g. http://13.229.236.171/admin/exchanges?from=BTC&to=ETH
 
 #### 1. GET `/`
 

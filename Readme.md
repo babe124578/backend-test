@@ -2,8 +2,8 @@
 
 ## Description
 
-- This project built by **`ExpressJS`** and **`MariaDB`**
-- The service above wrapped by **`Docker`** and using `docker-compose` to build.
+- This project built by [**`ExpressJS`**](https://expressjs.com/) and [**`MariaDB`**](https://mariadb.org/)
+- The service above wrapped by [**`Docker`**](https://www.docker.com/) and using `docker-compose` to build.
 
 #
 
@@ -21,24 +21,27 @@
 - For on server
   - Run on http://13.229.236.171
   - e.g. http://13.229.236.171/admin/exchanges?from=BTC&to=ETH
+  
+- You can click on GET route to see example.
+- For other method please use `curl` or ` postman`
 
-#### 1. GET `/`
+#### 1. [GET `/`](http://13.229.236.171/)
 
 - Health check
 
-#### 2. GET `/admin/balances/`
+#### 2. [GET `/admin/balances/`](http://13.229.236.171/admin/balances/)
 
 - Get all currency balances
-- If query parameter provided as example `?currency=BTC`, this will get balance of that currency
+- If query parameter provided as example [`?currency=BTC`](http://13.229.236.171/admin/balances?currency=BTC), this will get balance of that currency
 
-#### 3. GET `/admin/exchanges/`
+#### 3. [GET `/admin/exchanges/`](http://13.229.236.171/admin/exchanges?from=BTC&to=ETH)
 
 - Get exchange_rate from query parameter as example `?from=BTC&to=ETH`
 - If no query parameter or not found return error
 
-#### 4. GET `/customer/balances/`
+#### 4. [GET `/customer/balances/`](http://13.229.236.171/customer/balances?name=A&crypto_name=BTC)
 
-- Get balance from one customer as example query `?name=Bob&crypto_name=BTC`
+- Get balance from one customer as example query `?name=A&crypto_name=BTC`
 
 #### 5. POST `/admin/currency/`
 
@@ -118,7 +121,7 @@
 3.  Run `npm install`
 4.  Run `npm test`
     - This will be tested by `newman`
-5.  Or use **runner** in Postman to test the API
+5.  Or use **runner** in [Postman](https://www.postman.com/) to test the API
 
 ---
 
@@ -127,4 +130,4 @@
 # Section 2: Database
 
 - Based on node.js and Sequelize
-- Can view model at /database/index.js (can't run)
+- Can view model at [/database/index.js](https://github.com/babe124578/backend-test/blob/master/database/index.js) (can't run)

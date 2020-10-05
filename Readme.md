@@ -102,7 +102,7 @@
 
 ## To run this project
 
-1.  install `DOCKER`
+1.  install [`DOCKER`](https://docs.docker.com/engine/install/)
 2.  Go to /programming
 3.  Run `docker-compose up -d --build`
 <!-- 4.  After container started: restore database using

@@ -119,6 +119,5 @@
 
 # Section 2: Database
 
-## Nothing yet ...
-
-## **_SOON_**
+- Based on node.js and Sequelize
+- Can view model at /database/index.js (can't run)

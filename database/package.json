@@ -1,0 +1,24 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "database",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/babe124578/backend-test.git"
+  },
+  "author": "Natthapong Jiemjintanarom",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/babe124578/backend-test/issues"
+  },
+  "homepage": "https://github.com/babe124578/backend-test#readme",
+  "dependencies": {
+    "mariadb": "^2.4.2",
+    "sequelize": "^6.3.5"
+  }
+}

@@ -1,15 +1,15 @@
 /** Start init */
 
-const mariadb = require("mariadb");
+const mariadb = require('mariadb');
 
 const pool = mariadb.createPool({
-  host: "programming_databases_1",
+  host: 'programming_databases_1',
   // host: "13.228.170.147",
-  user: "root",
-  password: "0000",
+  user: 'root',
+  password: '0000',
   connectionLimit: 5,
 });
-const database = "programming";
+const database = 'programming';
 
 /** End init */
 

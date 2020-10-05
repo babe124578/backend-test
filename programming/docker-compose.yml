@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   databases:
     build:
@@ -9,6 +9,17 @@ services:
       - 3306:3306
     networks:
       - programming
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 500M
+        reservations:
+          cpus: 0.1
+          memory: 100M
+      restart_policy:
+        condition: on-failure
 
   api:
     build:
@@ -22,8 +33,17 @@ services:
       - 80:3000
     restart: always
     volumes:
-      - "./src:/usr/src/app/src"
-      - "./index.js:/usr/src/app/index.js"
+      - './src:/usr/src/app/src'
+      - './index.js:/usr/src/app/index.js'
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: 0.1
+          memory: 100M
+      restart_policy:
+        condition: on-failure
+
 networks:
   programming:
     driver: bridge

@@ -1,4 +1,4 @@
-FROM mariadb/server
+FROM yobasystems/alpine-mariadb
 
 ENV MYSQL_ROOT_PASSWORD=0000
 

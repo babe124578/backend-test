@@ -95,10 +95,10 @@
 1.  install `DOCKER`
 2.  Go to /programming
 3.  Run `docker-compose up -d --build`
-4.  After container started: restore database using
-    - docker exec programming_databases_1 bash initialize_database.bash
-5.  Access the API using browser `(localhost or 127.0.0.1)` method _GET_ only
-6.  Access the API with other method [GET, POST, PUT, DELETE] use `curl` or postman application.
+<!-- 4.  After container started: restore database using
+    - docker exec programming_databases_1 bash initialize_database.bash -->
+4.  Access the API using browser `(localhost or 127.0.0.1)` method _GET_ only
+5.  Access the API with other method [GET, POST, PUT, DELETE] use `curl` or postman application.
 
 ---
 

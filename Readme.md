@@ -15,11 +15,15 @@
 
 ## Endpoint
 
+- For local use only
+- Run on http://localhost port 80 or http://127.0.0.1
+- e.g. http://localhost/admin/balances?currency=XRP
+
 #### 1. GET `/`
 
 - Health check
 
-#### 2. `/admin/balances/`
+#### 2. GET `/admin/balances/`
 
 - Get all currency balances
 - If query parameter provided as example `?currency=BTC`, this will get balance of that currency

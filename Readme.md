@@ -21,6 +21,7 @@
 - For on server
   - Run on http://13.229.236.171
   - e.g. http://13.229.236.171/admin/exchanges?from=BTC&to=ETH
+  - If cannot access it please contact me. (Maybe I just stop instance due to instance cost)
   
 - You can click on GET route to see example.
 - For other method please use `curl` or ` postman`
